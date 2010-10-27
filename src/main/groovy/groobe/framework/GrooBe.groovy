@@ -4,7 +4,7 @@ import org.hamcrest.Matcher
 import static org.hamcrest.CoreMatchers.instanceOf
 import static org.hamcrest.CoreMatchers.not
 import static org.hamcrest.Matchers.*
-import static org.junit.Assert.assertThat
+import static org.hamcrest.MatcherAssert.assertThat
 
 /**
  */
