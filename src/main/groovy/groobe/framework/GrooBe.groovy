@@ -52,6 +52,7 @@ abstract class GrooBe {
         String.metaClass.shouldNotEndWith = { assertThat delegate, not(endsWith(it)) }
 
         String.metaClass.shouldContain = { assertThat delegate, containsString(it) }
+        String.metaClass.shouldNotContain = { assertThat delegate, not(containsString(it)) }
     }
 
     private static def orderingAssertions() {

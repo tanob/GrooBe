@@ -124,6 +124,11 @@ class GrooBeTest {
     }
 
     @Test
+    public void testStringShouldNotContain() {
+        "a different string".shouldNotContain "the same string"
+    }
+
+    @Test
     public void testListShouldContain() {
         def nums = new ArrayList<Integer>()
         nums.add(2)
