@@ -1,4 +1,4 @@
-package groobe.framework
+package com.github.tanob.groobe
 
 import org.hamcrest.Matcher
 import static org.hamcrest.CoreMatchers.instanceOf

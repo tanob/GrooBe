@@ -1,4 +1,4 @@
-package groobe.framework
+package com.github.tanob.groobe
 
 import org.junit.Before
 import org.junit.Test

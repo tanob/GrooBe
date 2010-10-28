@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groobe.framework</groupId>
+    <groupId>com.github.tanob</groupId>
     <artifactId>groobe</artifactId>
     <name>GrooBe</name>
     <packaging>jar</packaging>
