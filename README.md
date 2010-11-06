@@ -27,14 +27,41 @@ GrooBe
 * Collection assertions
   * `shouldContain` and `shouldNotContain`
 
-Examples
---------
+Usage
+-----
 
-You can find several examples in the `GrooBe` tests, but here are some for you:
+Just add `GrooBe` as a dependency on your Maven `pom.xml` file:
 
-    (2*2).shouldNotBe 5
-    1.shouldBeAn Integer
-    "a different string".shouldNotContain "the same string"
+    <dependency>
+        <groupId>com.github.tanob</groupId>
+        <artifactId>groobe</artifactId>
+        <version>1.0</version>
+    </dependency>
+ 
+Example
+-------
+
+Being based on the [hamcrest](http://code.google.com/p/hamcrest/) test expressions allows `GrooBe` to be used with JUnit or TestNG.
+Here is an example of how you use it with JUnit4, there are several other examples in the `src/test` directory:
+
+    import com.github.tanob.groobe.GrooBe
+
+    import org.junit.Before
+    import org.junit.Test
+
+    public class ExampleTest {
+        @Before
+        public void before() {
+            GrooBe.activate()
+        }
+
+        @Test
+        public void someShouldBeAssertions() {
+            (2*2).shouldNotBe 5
+            1.shouldBeAn Integer
+            "a different string".shouldNotContain "the same string"
+        }
+    }
 
 Thanks
 ------
