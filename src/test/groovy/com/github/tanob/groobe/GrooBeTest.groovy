@@ -85,9 +85,7 @@ class GrooBeTest {
 
     @Test
     public void testMapShouldHave() {
-        def map = new HashMap<String, String>()
-        map.put("x", 5)
-        map.put("y", 6)
+        def map = [x:5, y:6]
 
         map.shouldHaveKey "y"
         map.shouldHaveValue 6
@@ -96,26 +94,23 @@ class GrooBeTest {
 
     @Test
     public void testMapShouldNotHaveKey() {
-        def map = new HashMap<String, String>()
-        map.put("x", 5)
+        def map = [x:5]
 
         map.shouldNotHaveKey "y"
     }
 
     @Test
     public void testMapShouldNotHaveValue() {
-        def map = new HashMap<String, String>()
-        map.put("x", 5)
+        def map = [x:5]
 
         map.shouldNotHaveValue 4
     }
 
     @Test
     public void testMapShouldNotHaveEntry() {
-        def map = new HashMap<String, String>()
-        map.put("x", 5)
+        def map = [x:5]
 
-        map.shouldNotHaveEntry "y", 5 
+        map.shouldNotHaveEntry "y", 5
     }
 
     @Test
@@ -130,20 +125,14 @@ class GrooBeTest {
 
     @Test
     public void testListShouldContain() {
-        def nums = new ArrayList<Integer>()
-        nums.add(2)
-        nums.add(3)
-        nums.add(5)
+        def nums = [2,3,5]
 
         nums.shouldContain 3, 5
     }
 
     @Test
     public void testListShouldNotContain() {
-        def nums = new ArrayList<Integer>()
-        nums.add(2)
-        nums.add(3)
-        nums.add(5)
+        def nums = [2,3,5]
 
         nums.shouldNotContain 1, 4
     }
