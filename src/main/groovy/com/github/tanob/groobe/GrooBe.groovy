@@ -85,10 +85,7 @@ abstract class GrooBe {
     }
 
     private static Matcher notContainAnyOf(Object[] args) {
-        def elems = []
-        args.each {
-            elems << hasItem(it)
-        }        
+        def elems = args.collect { hasItem(it) }
         not(anyOf(elems))
     }
 }
