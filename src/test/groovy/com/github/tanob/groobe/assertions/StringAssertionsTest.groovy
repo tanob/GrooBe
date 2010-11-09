@@ -55,8 +55,8 @@ class StringAssertionsTest extends AssertionsLoaderTest {
             "".shouldHaveText "this should have text"
         }
 
-        shouldFailAndDisplay "String with text content expected", {
-            "\r\n\t   ".shouldHaveText
+        shouldFailAndDisplay "Only with whitespace chars", {
+            "\r\n\t   ".shouldHaveText "Only with whitespace chars"
         }
     }
 
