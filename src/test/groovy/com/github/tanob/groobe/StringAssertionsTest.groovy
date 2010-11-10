@@ -38,4 +38,24 @@ class StringAssertionsTest {
     public void testStringShouldNotContain() {
         "a different string".shouldNotContain "the same string"
     }
+
+    @Test
+    public void testShouldBeEmptyWithEmptyString() {
+        "".shouldBeEmpty()
+    }
+
+    @Test(expected = AssertionError)
+    public void testShouldBeEmptyWithNonEmptyString() {
+        "non empty string".shouldBeEmpty()
+    }
+
+    @Test
+    public void testShouldNotBeEmptyWithNonEmptyString() {
+        "non empty string".shouldNotBeEmpty()
+    }
+
+    @Test(expected = AssertionError)
+    public void testShouldNotBeEmptyWithEmptyString() {
+        "".shouldNotBeEmpty()
+    }
 }

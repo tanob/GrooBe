@@ -15,5 +15,8 @@ class StringAssertions {
 
         String.metaClass.shouldContain = { assertThat delegate, containsString(it) }
         String.metaClass.shouldNotContain = { assertThat delegate, not(containsString(it)) }
+
+        String.metaClass.shouldBeEmpty = { assertThat delegate.length(), is(0) }
+        String.metaClass.shouldNotBeEmpty = { assertThat delegate.length(), greaterThan(0) }
     }
 }

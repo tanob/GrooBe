@@ -20,6 +20,7 @@ GrooBe
   * `shouldStartWith` and `shouldNotStartWith`
   * `shouldEndWith` and `shouldNotEndWith`
   * `shouldContain` and `shouldNotContain`
+  * `shouldBeEmpty` and `shouldNotBeEmpty`
 
 * Map assertions
   * `shouldHaveKey` and `shouldNotHaveKey`
