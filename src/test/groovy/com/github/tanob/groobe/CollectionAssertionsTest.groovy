@@ -13,14 +13,16 @@ class CollectionAssertionsTest {
     public void testListShouldContain() {
         def nums = [2, 3, 5]
 
-        nums.shouldContain 3, 5
+        nums.shouldContain 3
+        nums.shouldContain 5
     }
 
     @Test
     public void testListShouldNotContain() {
         def nums = [2, 3, 5]
 
-        nums.shouldNotContain 1, 4
+        nums.shouldNotContain 1
+        nums.shouldNotContain 4
     }
 
     @Test
