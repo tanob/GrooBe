@@ -44,4 +44,28 @@ class CollectionAssertionsTest {
            for class: java.lang.Integer
         */
     }
+
+    @Test
+    public void testShouldBeEmptyWithEmptyList() {
+        def list = []
+        list.shouldBeEmpty()
+    }
+
+    @Test(expected = AssertionError)
+    public void testShouldBeEmptyWithNonEmptyList() {
+        def list = [1, 2, 3]
+        list.shouldBeEmpty()
+    }
+
+    @Test(expected = AssertionError)
+    public void testShouldNotBeEmptyWithEmptyList() {
+        def list = []
+        list.shouldNotBeEmpty()
+    }
+
+    @Test
+    public void testShouldNotBeEmptyWithNonEmptyList() {
+        def list = [1, 2, 3]
+        list.shouldNotBeEmpty()
+    }
 }

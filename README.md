@@ -26,6 +26,7 @@ GrooBe
 
 * Collection assertions
   * `shouldContain` and `shouldNotContain`
+  * `shouldBeEmpty` and `shouldNotBeEmpty`
 
 Usage
 -----
