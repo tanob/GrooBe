@@ -8,9 +8,11 @@ GrooBe
   * `shouldEqual` and `shouldNotEqual`
   * `shouldBeEqual` and `shouldNotBeEqual`
   * `shouldBeEqualTo` and `shouldNotBeEqualTo`
+
+* Instance assertions
   * "instance of" tests with `shouldBeA` and `shouldBeAn`, with the respective `shouldNotBeA` and `shouldNotBeAn`
 
-* Ordering assertions
+* Comparable assertions
   * `shouldBeGreaterThan`
   * `shouldBeLessThan`
 
