@@ -39,22 +39,22 @@ class NumberAssertionsTest extends AssertionsLoaderTest {
 
     @Test
     void testFaultyEqualityWithoutDescription() {
-        shouldFailAndDisplay "expecting 2, not 1", {
+        shouldFailWithMessage "expecting 2, not 1", {
             1.shouldBe 2
         }
 
-        shouldFailAndDisplay "expecting 2, not 1", {
+        shouldFailWithMessage "expecting 2, not 1", {
             1.shouldBeEqualsTo 2
         }
     }
 
     @Test
     void testFaultyEqualityWithDescription() {
-        shouldFailAndDisplay "1 == 2", {
+        shouldFailWithMessage "1 == 2", {
             1.shouldBe 2, "1 == 2"
         }
 
-        shouldFailAndDisplay "1 == 2", {
+        shouldFailWithMessage "1 == 2", {
             1.shouldBeEqualsTo 2, "1 == 2"
         }
     }

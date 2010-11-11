@@ -29,22 +29,22 @@ class BooleanAssertionsTest extends AssertionsLoaderTest {
 
     @Test
     void testFaultAssumptionsWithoutDescription() {
-        shouldFailAndDisplay "NOT true as expected", {
+        shouldFailWithMessage "NOT true as expected", {
             false.shouldBeTrue
         }
 
-        shouldFailAndDisplay "NOT false as expected", {
+        shouldFailWithMessage "NOT false as expected", {
             true.shouldBeFalse
         }
     }
 
     @Test
     void testFaultAssumptionsWithDescription() {
-        shouldFailAndDisplay "this should be false", {
+        shouldFailWithMessage "this should be false", {
             false.shouldBeTrue "this should be false"
         }
 
-        shouldFailAndDisplay "NOT false as expected", {
+        shouldFailWithMessage "NOT false as expected", {
             true.shouldBeFalse
         }
     }

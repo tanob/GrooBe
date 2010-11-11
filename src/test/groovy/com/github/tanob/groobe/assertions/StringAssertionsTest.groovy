@@ -28,38 +28,38 @@ class StringAssertionsTest extends AssertionsLoaderTest {
 
     @Test
     void testFaultyEmptynessWithoutDescription() {
-        shouldFailAndDisplay "EMPTY String expected, not 'A'", {
+        shouldFailWithMessage "EMPTY String expected, not 'A'", {
             "A".shouldBeEmpty
         }
 
-        shouldFailAndDisplay "length=0 expected, not 1", {
+        shouldFailWithMessage "length=0 expected, not 1", {
             " ".shouldHaveLength 0
         }
 
-        shouldFailAndDisplay "String with text content expected", {
+        shouldFailWithMessage "String with text content expected", {
             "".shouldHaveText
         }
 
-        shouldFailAndDisplay "String with text content expected", {
+        shouldFailWithMessage "String with text content expected", {
             "\r\n\t   ".shouldHaveText
         }
     }
 
     @Test
     void testFaultyEmptynessWithDescription() {
-        shouldFailAndDisplay "this should be empty", {
+        shouldFailWithMessage "this should be empty", {
             "A".shouldBeEmpty "this should be empty"
         }
 
-        shouldFailAndDisplay "this should have length", {
+        shouldFailWithMessage "this should have length", {
             " ".shouldHaveLength 0, "this should have length"
         }
 
-        shouldFailAndDisplay "this should have text", {
+        shouldFailWithMessage "this should have text", {
             "".shouldHaveText "this should have text"
         }
 
-        shouldFailAndDisplay "Only with whitespace chars", {
+        shouldFailWithMessage "Only with whitespace chars", {
             "\r\n\t   ".shouldHaveText "Only with whitespace chars"
         }
     }
@@ -76,14 +76,14 @@ class StringAssertionsTest extends AssertionsLoaderTest {
 
     @Test
     void testFaultyNonEmptyStringWithoutDescription() {
-        shouldFailAndDisplay "length=1 expected, not 0", {
+        shouldFailWithMessage "length=1 expected, not 0", {
             "".shouldHaveLength 1
         }
     }
 
     @Test
     void testFaultyNonEmptyStringWithDescription() {
-        shouldFailAndDisplay "this should have 1 single char", {
+        shouldFailWithMessage "this should have 1 single char", {
             "".shouldHaveLength 1, "this should have 1 single char"
         }
     }

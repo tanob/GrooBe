@@ -37,7 +37,7 @@ abstract class AssertionsLoaderTest {
 
     // utility methods
 
-    void shouldFailAndDisplay(String message, Closure closure) {
+    void shouldFailWithMessage(String message, Closure closure) {
         try {
             closure()
             fail()
