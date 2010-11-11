@@ -20,6 +20,10 @@ class StringAssertionsTest extends AssertionsLoaderTest {
     void testEmptyness() {
         "".shouldBeEmpty
         "".shouldHaveLength 0
+
+        def emptyString = ""
+        "${emptyString}".shouldBeEmpty
+        "${emptyString}".shouldHaveLength 0
     }
 
     @Test
@@ -63,6 +67,7 @@ class StringAssertionsTest extends AssertionsLoaderTest {
     @Test
     void testNonEmptyString() {
         " ".shouldHaveLength
+        "${1}".shouldHaveLength
         " ".shouldHaveLength 1
         " 1 ".shouldHaveLength 3
         "${1.class}".shouldHaveText

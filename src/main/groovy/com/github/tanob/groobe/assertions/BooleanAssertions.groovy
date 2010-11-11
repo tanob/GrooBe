@@ -1,29 +1,31 @@
 package com.github.tanob.groobe.assertions
 
-import static org.junit.Assert.assertFalse
-import static org.junit.Assert.assertTrue
-
 class BooleanAssertions implements AssertionsLoader {
 
-    def void load() {
-        Boolean.metaClass.isShouldBeTrue = {
-            assertTrue "NOT true as expected", delegate
-        }
+  private def _shouldBe = {Boolean expected, Boolean result, String failMessage ->
+    assertThat failMessage, result == expected
+  }
 
-        Boolean.metaClass.shouldBeTrue = {String failMessage ->
-            assertTrue failMessage, delegate
-        }
-
-        Boolean.metaClass.isShouldBeFalse = {
-            assertFalse "NOT false as expected", delegate
-        }
-
-        Boolean.metaClass.shouldBeFalse = {String failMessage ->
-            assertFalse failMessage, delegate
-        }
+  void load() {
+    Boolean.metaClass.isShouldBeTrue = {
+      _shouldBe true, delegate, "NOT true as expected"
     }
 
-    def void unload() {
-        Boolean.metaClass = null
+    Boolean.metaClass.shouldBeTrue = {String failMessage ->
+      _shouldBe true, delegate, failMessage
     }
+
+    Boolean.metaClass.isShouldBeFalse = {
+      _shouldBe false, delegate, "NOT false as expected"
+    }
+
+    Boolean.metaClass.shouldBeFalse = {String failMessage ->
+      _shouldBe false, delegate, failMessage
+    }
+  }
+
+  void unload() {
+    Boolean.metaClass = null
+  }
+
 }

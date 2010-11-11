@@ -1,42 +1,62 @@
 package com.github.tanob.groobe.assertions
 
-import static org.junit.Assert.assertTrue
-
 class StringAssertions implements AssertionsLoader {
 
-    def void load() {
-        String.metaClass.getShouldBeEmpty = {
-            assertTrue("EMPTY String expected, not '${delegate}'",
-                "" == delegate)
-        }
+  private def _stringTypes = [String.metaClass, GString.metaClass]
 
-        String.metaClass.shouldBeEmpty = {String description ->
-            assertTrue(description, "" == delegate)
-        }
+  private def _shouldBeEmpty = {String result, String failMessage = "EMPTY String expected, not '${result}'" ->
+    assertThat failMessage, "" == result
+  }
 
-        String.metaClass.getShouldHaveLength = {
-            assertTrue("NOT EMPTY String expected", delegate.length() > 0)
-        }
+  private def _shouldHaveAnyLength = {String result, String failMessage = "NOT expecting an empty String" ->
+    assertThat failMessage, result.length() > 0
+  }
 
-        String.metaClass.shouldHaveLength = {String description ->
-            assertTrue(description, delegate.length() > 0)
-        }
+  private def _shouldHaveLength = {String result, int expectedLength, String failMessage = "length=${expectedLength} expected, not ${result.length()}" ->
+    assertThat failMessage, result.length() == expectedLength
+  }
 
-        String.metaClass.shouldHaveLength = {int length,
-                                             String description = "length=${length} expected, not ${delegate.length()}" ->
-            assertTrue(description, delegate.length() == length)
-        }
+  private def _shouldHaveText = {String result, String failMessage = "String with text content expected" ->
+    assertThat failMessage, result.trim().length() > 0
+  }
 
-        String.metaClass.getShouldHaveText = {
-            assertTrue("String with text content expected", delegate.trim().length() > 0)
-        }
+  void load() {
 
-        String.metaClass.shouldHaveText = {String failMessage ->
-            assertTrue(failMessage, delegate.trim().length() > 0)
-        }
+    _stringTypes.each {
+      it.getShouldBeEmpty = {
+        _shouldBeEmpty delegate
+      }
+
+      it.shouldBeEmpty = {String description ->
+        _shouldBeEmpty delegate, description
+      }
+
+      it.getShouldHaveLength = {
+        _shouldHaveAnyLength delegate
+      }
+
+      it.shouldHaveLength = {String description ->
+        _shouldHaveAnyLength delegate, description
+      }
+
+      it.shouldHaveLength = {int length,
+                                       String description = "length=${length} expected, not ${delegate.length()}" ->
+        _shouldHaveLength delegate, length, description
+      }
+
+      it.getShouldHaveText = {
+        _shouldHaveText delegate
+      }
+
+      it.shouldHaveText = {String failMessage ->
+        _shouldHaveText delegate, failMessage
+      }
     }
 
-    def void unload() {
-        String.metaClass = null
-    }
+  }
+
+  def void unload() {
+    String.metaClass = null
+  }
+
 }

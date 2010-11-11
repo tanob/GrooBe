@@ -2,8 +2,14 @@ package com.github.tanob.groobe.assertions
 
 interface AssertionsLoader {
 
-    void load()
+  public static def assertThat = {String failMessage, boolean result ->
+    if (!result) {
+      throw new AssertionError(failMessage)
+    }
+  }
 
-    void unload()
+  void load()
+
+  void unload()
 
 }
