@@ -80,6 +80,24 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.6</version>
+                <!--
+                    remove this configuration element after
+                    completely merge changes
+                -->
+                <configuration>
+                    <excludes>
+                        <exclude>**/groobe/*.java</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/assertions/*AssertionsTest.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <executions>
@@ -103,13 +121,25 @@
                 <version>2.4</version>
                 <configuration>
                     <!--
+                        remove this instrumentation element after
+                        completely merge branches
+                    -->
+                    <instrumentation>
+                        <ignores>
+                            <ignore>com.github.tanob.groobe.assertions.*</ignore>
+                        </ignores>
+                        <excludes>
+                            <exclude>com/github/tanob/groobe/*.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                    <!--
                         see http://mojo.codehaus.org/cobertura-maven-plugin/usage.html
                         for more parameters
                     -->
                     <check>
                         <haltOnFailure>true</haltOnFailure>
                         <totalLineRate>100</totalLineRate>
-                        <totalBranchRate>50</totalBranchRate>
+                        <totalBranchRate>100</totalBranchRate>
                     </check>
                 </configuration>
                 <executions>
