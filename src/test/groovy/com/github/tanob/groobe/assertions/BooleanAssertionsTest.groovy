@@ -40,12 +40,12 @@ class BooleanAssertionsTest extends AssertionsLoaderTest {
 
     @Test
     void testFaultAssumptionsWithDescription() {
-        shouldFailWithMessage "this should be false", {
-            false.shouldBeTrue "this should be false"
+        shouldFailWithMessage "this should be true", {
+            false.shouldBeTrue "this should be true"
         }
 
-        shouldFailWithMessage "NOT false as expected", {
-            true.shouldBeFalse
+        shouldFailWithMessage "this should be false", {
+            true.shouldBeFalse "this should be false"
         }
     }
 
