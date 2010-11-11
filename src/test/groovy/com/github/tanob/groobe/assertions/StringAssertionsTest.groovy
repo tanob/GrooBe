@@ -4,10 +4,6 @@ import org.junit.Test
 
 class StringAssertionsTest extends AssertionsLoaderTest {
 
-    def emptyString = ""
-    def whitespaceString = "\r\n\t "
-    def textString = " A "
-
     def StringAssertionsTest() {
         super(new StringAssertions())
     }
