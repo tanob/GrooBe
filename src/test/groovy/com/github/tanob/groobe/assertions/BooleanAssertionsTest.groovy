@@ -48,4 +48,5 @@ class BooleanAssertionsTest extends AssertionsLoaderTest {
             true.shouldBeFalse
         }
     }
+
 }
