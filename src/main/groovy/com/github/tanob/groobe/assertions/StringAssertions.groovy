@@ -2,8 +2,6 @@ package com.github.tanob.groobe.assertions
 
 class StringAssertions implements AssertionsLoader {
 
-    private def _stringTypes = [String.metaClass, GString.metaClass]
-
     private def _shouldBeEmpty = {String result, String failMessage = "EMPTY String expected, not '${result}'" ->
         assertTrue failMessage, "" == result
     }
@@ -21,40 +19,38 @@ class StringAssertions implements AssertionsLoader {
     }
 
     void load() {
-        _stringTypes.each {
-            it.getShouldBeEmpty = {
-                _shouldBeEmpty delegate
-            }
+        CharSequence.metaClass.getShouldBeEmpty = {
+            _shouldBeEmpty delegate
+        }
 
-            it.shouldBeEmpty = {String description ->
-                _shouldBeEmpty delegate, description
-            }
+        CharSequence.metaClass.shouldBeEmpty = {String description ->
+            _shouldBeEmpty delegate, description
+        }
 
-            it.getShouldHaveLength = {
-                _shouldHaveAnyLength delegate
-            }
+        CharSequence.metaClass.getShouldHaveLength = {
+            _shouldHaveAnyLength delegate
+        }
 
-            it.shouldHaveLength = {String description ->
-                _shouldHaveAnyLength delegate, description
-            }
+        CharSequence.metaClass.shouldHaveLength = {String description ->
+            _shouldHaveAnyLength delegate, description
+        }
 
-            it.shouldHaveLength = {int length,
-                                   String description = "length=${length} expected, not ${delegate.length()}" ->
-                _shouldHaveLength delegate, length, description
-            }
+        CharSequence.metaClass.shouldHaveLength = {int length,
+                                                   String description = "length=${length} expected, not ${delegate.length()}" ->
+            _shouldHaveLength delegate, length, description
+        }
 
-            it.getShouldHaveText = {
-                _shouldHaveText delegate
-            }
+        CharSequence.metaClass.getShouldHaveText = {
+            _shouldHaveText delegate
+        }
 
-            it.shouldHaveText = {String failMessage ->
-                _shouldHaveText delegate, failMessage
-            }
+        CharSequence.metaClass.shouldHaveText = {String failMessage ->
+            _shouldHaveText delegate, failMessage
         }
     }
 
     def void unload() {
-        String.metaClass = null
+        CharSequence.metaClass = null
     }
 
 }
