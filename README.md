@@ -8,9 +8,11 @@ GrooBe
   * `shouldEqual` and `shouldNotEqual`
   * `shouldBeEqual` and `shouldNotBeEqual`
   * `shouldBeEqualTo` and `shouldNotBeEqualTo`
+
+* Instance assertions
   * "instance of" tests with `shouldBeA` and `shouldBeAn`, with the respective `shouldNotBeA` and `shouldNotBeAn`
 
-* Ordering assertions
+* Comparable assertions
   * `shouldBeGreaterThan`
   * `shouldBeLessThan`
 
@@ -18,6 +20,7 @@ GrooBe
   * `shouldStartWith` and `shouldNotStartWith`
   * `shouldEndWith` and `shouldNotEndWith`
   * `shouldContain` and `shouldNotContain`
+  * `shouldBeEmpty` and `shouldNotBeEmpty`
 
 * Map assertions
   * `shouldHaveKey` and `shouldNotHaveKey`
@@ -26,6 +29,7 @@ GrooBe
 
 * Collection assertions
   * `shouldContain` and `shouldNotContain`
+  * `shouldBeEmpty` and `shouldNotBeEmpty`
 
 Usage
 -----
