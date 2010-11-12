@@ -1,5 +1,8 @@
 package com.github.tanob.groobe.assertions
 
+import com.github.tanob.groobe.AssertionsLoader
+import static com.github.tanob.groobe.assertions.AssertionsSupport.assertTrue
+
 class BooleanAssertions implements AssertionsLoader {
 
     private def _shouldBe = {Boolean expected, Boolean result, String failMessage ->

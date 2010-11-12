@@ -1,7 +1,8 @@
-package com.github.tanob.groobe
+package com.github.tanob.groobe.hamcrest
 
 import org.junit.Before
 import org.junit.Test
+import com.github.tanob.groobe.GrooBe
 
 class MapAssertionsTest {
     @Before

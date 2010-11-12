@@ -1,12 +1,12 @@
-package com.github.tanob.groobe
+package com.github.tanob.groobe.hamcrest
 
+import com.github.tanob.groobe.AssertionsLoader
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.*
 
-/**
- */
-class StringAssertions {
-    public static def activate() {
+class StringAssertions implements AssertionsLoader {
+
+    def void load() {
         String.metaClass.shouldStartWith = { assertThat delegate, startsWith(it) }
         String.metaClass.shouldNotStartWith = { assertThat delegate, not(startsWith(it)) }
 
@@ -19,4 +19,9 @@ class StringAssertions {
         String.metaClass.shouldBeEmpty = { assertThat delegate.length(), is(0) }
         String.metaClass.shouldNotBeEmpty = { assertThat delegate.length(), greaterThan(0) }
     }
+
+    def void unload() {
+        String.metaClass = null
+    }
+
 }

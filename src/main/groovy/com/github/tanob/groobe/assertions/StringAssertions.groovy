@@ -1,5 +1,8 @@
 package com.github.tanob.groobe.assertions
 
+import com.github.tanob.groobe.AssertionsLoader
+import static com.github.tanob.groobe.assertions.AssertionsSupport.assertTrue
+
 class StringAssertions implements AssertionsLoader {
 
     private def _shouldBeEmpty = {String result, String failMessage = "EMPTY String expected, not '${result}'" ->

@@ -37,6 +37,7 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
             <version>1.1</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -89,7 +90,7 @@
                 -->
                 <configuration>
                     <excludes>
-                        <exclude>**/groobe/*.java</exclude>
+                        <exclude>**/hamcrest/*.java</exclude>
                     </excludes>
                     <includes>
                         <include>**/assertions/*AssertionsTest.java</include>
@@ -126,10 +127,10 @@
                     -->
                     <instrumentation>
                         <ignores>
-                            <ignore>com.github.tanob.groobe.assertions.*</ignore>
+                            <ignore>com.github.tanob.groobe.hamcrest.*</ignore>
                         </ignores>
                         <excludes>
-                            <exclude>com/github/tanob/groobe/*.class</exclude>
+                            <exclude>com/github/tanob/groobe/hamcrest/*.class</exclude>
                         </excludes>
                     </instrumentation>
                     <!--
@@ -150,6 +151,7 @@
                             <goal>cobertura</goal>
                         </goals>
                     </execution>
+                    <!-- remove after completing refactor 
                     <execution>
                         <id>package-if-covered</id>
                         <phase>package</phase>
@@ -158,6 +160,7 @@
                             <goal>check</goal>
                         </goals>
                     </execution>
+                    -->
                 </executions>
             </plugin>
 

@@ -1,30 +1,34 @@
-package com.github.tanob.groobe
+package com.github.tanob.groobe.hamcrest
 
+import com.github.tanob.groobe.AssertionsLoader
+import static org.hamcrest.CoreMatchers.not
 import static org.hamcrest.MatcherAssert.assertThat
-import static org.hamcrest.CoreMatchers.*
 
-/**
- */
-public class EqualityAssertions {
-    private static def shouldBeEqualTo = { assertThat delegate, is(it) }
-    private static def shouldNotBeEqualTo = { assertThat delegate, is(not(it)) }
+public class EqualityAssertions implements AssertionsLoader {
+    private def shouldBeEqualTo = { assertThat delegate, is(it) }
+    private def shouldNotBeEqualTo = { assertThat delegate, is(not(it)) }
 
-    public static def activate() {
+    def void load() {
         shouldBeEqual()
         shouldNotBeEqual()
     }
 
-    private static def shouldNotBeEqual() {
+    private def shouldNotBeEqual() {
         Object.metaClass.shouldNotBe = shouldNotBeEqualTo
         Object.metaClass.shouldNotEqual = shouldNotBeEqualTo
         Object.metaClass.shouldNotBeEqual = shouldNotBeEqualTo
         Object.metaClass.shouldNotBeEqualTo = shouldNotBeEqualTo
     }
 
-    private static def shouldBeEqual() {
+    private def shouldBeEqual() {
         Object.metaClass.shouldBe = shouldBeEqualTo
         Object.metaClass.shouldEqual = shouldBeEqualTo
         Object.metaClass.shouldBeEqual = shouldBeEqualTo
         Object.metaClass.shouldBeEqualTo = shouldBeEqualTo
     }
+
+    def void unload() {
+        Object.metaClass = null
+    }
+
 }

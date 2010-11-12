@@ -1,61 +1,92 @@
 package com.github.tanob.groobe
 
-import org.junit.Before
 import org.junit.Test
 
-class StringAssertionsTest {
-    @Before
-    public void setUp() {
-        GrooBe.activate();
+abstract class StringAssertionsTest extends AssertionsLoaderTest {
+
+    @Test
+    final void testEmptyStrings() {
+        "".shouldBeEmpty
+        "".shouldHaveLength 0
     }
 
     @Test
-    public void testAStringShouldStartWith() {
-        "this is a string".shouldStartWith "this"
-    }
+    final void testFailedEmptyStrings() {
+        Closure assertionCallback = {AssertionError e, String customMessage ->
+            verifyFailedShouldBeEmpty e, customMessage, "A"
+        }
 
-    @Test(expected = AssertionError)
-    public void testAStringShouldNotStartWith() {
-        "some string".shouldNotStartWith "some"
-    }
+        shouldFail null, assertionCallback, {
+            "A".shouldBeEmpty
+        }
 
-    @Test
-    public void testAStringShouldEndWith() {
-        "this is a string".shouldEndWith "string"
-    }
+        shouldFail "this should be empty", assertionCallback, {
+            "A".shouldBeEmpty "this should be empty"
+        }
 
-    @Test(expected = AssertionError)
-    public void testAStringShouldNotEndWith() {
-        "some string".shouldNotEndWith "string"
-    }
+        assertionCallback = {AssertionError e, String customMessage ->
+            verifyFailedShouldHaveLength e, customMessage, " ", 0
+        }
 
-    @Test
-    public void testStringShouldContain() {
-        "a string contains".shouldContain "string"
-    }
+        shouldFail null, assertionCallback, {
+            " ".shouldHaveLength 0
+        }
 
-    @Test
-    public void testStringShouldNotContain() {
-        "a different string".shouldNotContain "the same string"
+        shouldFail "should have length 0", assertionCallback, {
+            " ".shouldHaveLength 0, "should have length 0"
+        }
     }
 
     @Test
-    public void testShouldBeEmptyWithEmptyString() {
-        "".shouldBeEmpty()
-    }
-
-    @Test(expected = AssertionError)
-    public void testShouldBeEmptyWithNonEmptyString() {
-        "non empty string".shouldBeEmpty()
+    final void testNonEmptyStrings() {
+        " ".shouldHaveLength
+        "  1 ".shouldHaveLength 4
+        "\r\n\t 1".shouldHaveText
     }
 
     @Test
-    public void testShouldNotBeEmptyWithNonEmptyString() {
-        "non empty string".shouldNotBeEmpty()
+    final void testFailedNonEmptyStrings() {
+        Closure assertionCallback = {AssertionError e, String customMessage ->
+            verifyFailedShouldHaveLength e, customMessage, "", -1
+        }
+
+        shouldFail null, assertionCallback, {
+            "".shouldHaveLength
+        }
+
+        shouldFail "should have any length", assertionCallback, {
+            "".shouldHaveLength "should have any length"
+        }
+
+        assertionCallback = {AssertionError e, String customMessage ->
+            verifyFailedShouldHaveLength e, customMessage, "  ", 1
+        }
+
+        shouldFail null, assertionCallback, {
+            "  ".shouldHaveLength 1
+        }
+
+        shouldFail "should have length 1", assertionCallback, {
+            "  ".shouldHaveLength 1, "should have length 1"
+        }
+
+        assertionCallback = {AssertionError e, String customMessage ->
+            verifyFailedShouldHaveText e, customMessage, "\r\n\t "
+        }
+
+        shouldFail null, assertionCallback, {
+            "\r\n\t ".shouldHaveText
+        }
+
+        shouldFail "only whitespaces", assertionCallback, {
+            "\r\n\t ".shouldHaveText "only whitespaces"
+        }
     }
 
-    @Test(expected = AssertionError)
-    public void testShouldNotBeEmptyWithEmptyString() {
-        "".shouldNotBeEmpty()
-    }
+    abstract void verifyFailedShouldBeEmpty(AssertionError error, String customMessage, String result)
+
+    abstract void verifyFailedShouldHaveLength(AssertionError error, String customMessage, String result, int expectedLength)
+
+    abstract void verifyFailedShouldHaveText(AssertionError error, String customMessage, String result)
+
 }
