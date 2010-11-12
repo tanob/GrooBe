@@ -106,7 +106,6 @@
                         <argument>-d</argument>
                         <argument>${project.build.directory}/groovydoc</argument>
                         <argument>com.github.tanob.groobe</argument>
-                        <argument>GrooBe.groovy</argument>
                     </arguments>
                 </configuration>
             </plugin>
