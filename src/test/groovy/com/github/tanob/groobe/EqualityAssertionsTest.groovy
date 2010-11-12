@@ -2,6 +2,7 @@ package com.github.tanob.groobe
 
 import org.junit.Before
 import org.junit.Test
+import static org.hamcrest.MatcherAssert.assertThat
 
 class EqualityAssertionsTest {
     @Before
@@ -33,5 +34,20 @@ class EqualityAssertionsTest {
     @Test
     public void testShouldEqual() {
         (2 + 4).shouldEqual 6
+    }
+
+    @Test
+    public void testShouldNotBeNull() {
+        "a string instance".shouldNotBe null
+    }
+
+    @Test
+    public void testNullCheckWithShouldBe() {
+        null.shouldBe null
+    }
+
+    @Test(expected = AssertionError)
+    public void testNullCheckWithShouldNotBe() {
+        null.shouldNotBe null
     }
 }

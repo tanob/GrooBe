@@ -6,8 +6,8 @@ import static org.hamcrest.CoreMatchers.*
 /**
  */
 public class EqualityAssertions {
-    private static def shouldBeEqualTo = { assertThat delegate, is(it) }
-    private static def shouldNotBeEqualTo = { assertThat delegate, is(not(it)) }
+    private static def shouldBeEqualTo = { assertThat fixNull(delegate), is(it) }
+    private static def shouldNotBeEqualTo = { assertThat fixNull(delegate), is(not(it)) }
 
     public static def activate() {
         shouldBeEqual()
@@ -26,5 +26,9 @@ public class EqualityAssertions {
         Object.metaClass.shouldEqual = shouldBeEqualTo
         Object.metaClass.shouldBeEqual = shouldBeEqualTo
         Object.metaClass.shouldBeEqualTo = shouldBeEqualTo
+    }
+
+    private static def fixNull(instance) {
+        instance.equals(null) ? null : instance
     }
 }
