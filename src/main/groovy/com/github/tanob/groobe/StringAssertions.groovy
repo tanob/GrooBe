@@ -7,16 +7,16 @@ import static org.hamcrest.Matchers.*
  */
 class StringAssertions {
     public static def activate() {
-        String.metaClass.shouldStartWith = { assertThat delegate, startsWith(it) }
-        String.metaClass.shouldNotStartWith = { assertThat delegate, not(startsWith(it)) }
+        CharSequence.metaClass.shouldStartWith = { assertThat delegate.toString(), startsWith(it.toString()) }
+        CharSequence.metaClass.shouldNotStartWith = { assertThat delegate, not(startsWith(it.toString())) }
 
-        String.metaClass.shouldEndWith = { assertThat delegate, endsWith(it) }
-        String.metaClass.shouldNotEndWith = { assertThat delegate, not(endsWith(it)) }
+        CharSequence.metaClass.shouldEndWith = { assertThat delegate.toString(), endsWith(it.toString()) }
+        CharSequence.metaClass.shouldNotEndWith = { assertThat delegate, not(endsWith(it.toString())) }
 
-        String.metaClass.shouldContain = { assertThat delegate, containsString(it) }
-        String.metaClass.shouldNotContain = { assertThat delegate, not(containsString(it)) }
+        CharSequence.metaClass.shouldContain = { assertThat delegate.toString(), containsString(it.toString()) }
+        CharSequence.metaClass.shouldNotContain = { assertThat delegate, not(containsString(it.toString())) }
 
-        String.metaClass.shouldBeEmpty = { assertThat delegate.length(), is(0) }
-        String.metaClass.shouldNotBeEmpty = { assertThat delegate.length(), greaterThan(0) }
+        CharSequence.metaClass.shouldBeEmpty = { assertThat delegate.length(), is(0) }
+        CharSequence.metaClass.shouldNotBeEmpty = { assertThat delegate.length(), greaterThan(0) }
     }
 }
