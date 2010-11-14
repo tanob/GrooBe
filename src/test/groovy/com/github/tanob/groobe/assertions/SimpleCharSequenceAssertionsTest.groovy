@@ -2,12 +2,11 @@ package com.github.tanob.groobe.assertions
 
 import com.github.tanob.groobe.AssertionsLoader
 import com.github.tanob.groobe.StringAssertionsTest
-import static org.junit.Assert.assertEquals
 
-class SimpleStringAssertionsTest extends StringAssertionsTest {
+class SimpleCharSequenceAssertionsTest extends StringAssertionsTest {
 
     AssertionsLoader getAssertionsLoader() {
-        return new StringAssertions()
+        CharSequenceAssertions.getInstance()
     }
 
     void verifyFailedShouldBeEmpty(AssertionError error, String customMessage, String result) {

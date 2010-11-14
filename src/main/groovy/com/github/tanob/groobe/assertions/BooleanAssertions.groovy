@@ -1,34 +1,32 @@
 package com.github.tanob.groobe.assertions
 
-import com.github.tanob.groobe.AssertionsLoader
+import com.github.tanob.groobe.BaseAssertionsLoader
 import static com.github.tanob.groobe.assertions.AssertionsSupport.assertTrue
 
-class BooleanAssertions implements AssertionsLoader {
+@Singleton
+class BooleanAssertions extends BaseAssertionsLoader {
 
-    private def _shouldBe = {Boolean expected, Boolean result, String failMessage ->
-        assertTrue failMessage, result == expected
+    def BooleanAssertions() {
+        super(Boolean)
     }
 
-    void load() {
-        Boolean.metaClass.isShouldBeTrue = {
-            _shouldBe true, delegate, "NOT true as expected"
-        }
-
-        Boolean.metaClass.shouldBeTrue = {String failMessage ->
-            _shouldBe true, delegate, failMessage
-        }
-
-        Boolean.metaClass.isShouldBeFalse = {
-            _shouldBe false, delegate, "NOT false as expected"
-        }
-
-        Boolean.metaClass.shouldBeFalse = {String failMessage ->
-            _shouldBe false, delegate, failMessage
-        }
+    def shouldBe(boolean delegate, Object[] args) {
+        boolean expected = Boolean.valueOf(args[0])
+        Object[] otherArgs = args.length > 1 ? args[1..-1] : []
+        _shouldBeImpl delegate, expected, otherArgs
     }
 
-    void unload() {
-        Boolean.metaClass = null
+    def shouldBeTrue(boolean delegate, Object[] args) {
+        _shouldBeImpl delegate, true, args
+    }
+
+    def shouldBeFalse(boolean delegate, Object[] args) {
+        _shouldBeImpl delegate, false, args
+    }
+
+    private void _shouldBeImpl(boolean delegate, boolean expected, Object[] args) {
+        String failMessage = args.length == 0 ? "NOT $expected as expected" : args[0]
+        assertTrue failMessage, expected == delegate
     }
 
 }

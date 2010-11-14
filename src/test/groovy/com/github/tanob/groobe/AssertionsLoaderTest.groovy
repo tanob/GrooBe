@@ -1,29 +1,40 @@
 package com.github.tanob.groobe
 
-import org.junit.After
-import org.junit.Before
-import static org.junit.Assert.fail
+abstract class AssertionsLoaderTest extends GroovyTestCase {
 
-abstract class AssertionsLoaderTest {
-
-    @Before
-    final void loadAssertions() {
-        getAssertionsLoader().load()
+    void setUp() {
+        assertionsLoader.load()
     }
 
-    @After
-    final void unloadAssertions() {
-        getAssertionsLoader().unload()
+    void tearDown() {
+        assertionsLoader.unload()
+    }
+
+    void testAssertionsMissingAfterUnload() {
+        fail "NOT yet implemented"
+    }
+
+    void testOtherAssertionsShouldRemainAvailableAfterUnload() {
+        fail "NOT yet implemented"
     }
 
     abstract AssertionsLoader getAssertionsLoader()
 
     void shouldFail(String customFailMessage, Closure failMessageAssertion, Closure failedStatement) {
+        boolean failed = false;
+
         try {
             failedStatement()
-            fail()
         } catch (AssertionError e) {
+            failed = true
             failMessageAssertion(e, customFailMessage)
+
+        } catch (Throwable unexpected) {
+            throw new AssertionError("method did not failed as expected")
+        }
+
+        if (!failed) {
+            throw new AssertionError("method should have failed")
         }
     }
 
