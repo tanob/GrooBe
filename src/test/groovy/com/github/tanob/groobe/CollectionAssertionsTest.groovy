@@ -10,11 +10,21 @@ class CollectionAssertionsTest {
     }
 
     @Test
-    public void testListShouldContain() {
-        def nums = [2, 3, 5]
+    public void testShouldContainWithSimpleElement() {
+        def list = [1, 2, 3]
+        list.shouldContain 1
+    }
 
-        nums.shouldContain 3
-        nums.shouldContain 5
+    @Test
+    public void testShouldContainWithFailureMessage() {
+        def list = [1, 2, 3]
+        def failureMessage = "4 is missing"
+        try {
+            list.shouldContain 4, failureMessage
+            throw new AssertionError("should have failed because 4 is missing")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 
     @Test
@@ -26,9 +36,15 @@ class CollectionAssertionsTest {
     }
 
     @Test
-    public void testShouldContainWithSimpleElement() {
+    public void testShouldNotContainWithFailureMessage() {
         def list = [1, 2, 3]
-        list.shouldContain 1
+        def failureMessage = "2 is missing"
+        try {
+            list.shouldNotContain 2, failureMessage
+            throw new AssertionError("should have failed because 2 is in the list")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 
     @Test
@@ -57,10 +73,32 @@ class CollectionAssertionsTest {
         list.shouldBeEmpty()
     }
 
+    @Test
+    public void testShouldBeEmptyWithFailureMessage() {
+        def failureMessage = "list should be empty"
+        try {
+            [1, 2].shouldBeEmpty failureMessage
+            throw new AssertionError("should have failed because list is not empty")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
     @Test(expected = AssertionError)
     public void testShouldNotBeEmptyWithEmptyList() {
         def list = []
         list.shouldNotBeEmpty()
+    }
+
+    @Test
+    public void testShouldNotBeEmptyWithFailureMessage() {
+        def failureMessage = "list should not be empty"
+        try {
+            [].shouldNotBeEmpty failureMessage
+            throw new AssertionError("should have failed because list is empty")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 
     @Test

@@ -1,13 +1,15 @@
 package com.github.tanob.groobe
 
-import static org.hamcrest.MatcherAssert.assertThat
-import static org.hamcrest.CoreMatchers.*
+import static org.hamcrest.CoreMatchers.is
+import static org.hamcrest.CoreMatchers.not
+import static com.github.tanob.groobe.AssertionSupport.assertTransformedDelegate
 
 /**
  */
 public class EqualityAssertions {
-    private static def shouldBeEqualTo = { assertThat fixNull(delegate), is(it) }
-    private static def shouldNotBeEqualTo = { assertThat fixNull(delegate), is(not(it)) }
+    private static def fixingNull = { it.equals(null) ? null : it }
+    private static def shouldBeEqualTo = assertTransformedDelegate (fixingNull, { is(it) })
+    private static def shouldNotBeEqualTo = assertTransformedDelegate (fixingNull, { is(not(it)) })
 
     public static def activate() {
         shouldBeEqual()
@@ -26,9 +28,5 @@ public class EqualityAssertions {
         Object.metaClass.shouldEqual = shouldBeEqualTo
         Object.metaClass.shouldBeEqual = shouldBeEqualTo
         Object.metaClass.shouldBeEqualTo = shouldBeEqualTo
-    }
-
-    private static def fixNull(instance) {
-        instance.equals(null) ? null : instance
     }
 }

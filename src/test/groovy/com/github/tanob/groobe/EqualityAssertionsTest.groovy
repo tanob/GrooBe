@@ -2,7 +2,6 @@ package com.github.tanob.groobe
 
 import org.junit.Before
 import org.junit.Test
-import static org.hamcrest.MatcherAssert.assertThat
 
 class EqualityAssertionsTest {
     @Before
@@ -49,5 +48,27 @@ class EqualityAssertionsTest {
     @Test(expected = AssertionError)
     public void testNullCheckWithShouldNotBe() {
         null.shouldNotBe null
+    }
+
+    @Test
+    public void testShouldBeWithFailureMessage() {
+        def failureMessage = "learn math: 1+3 is 4"
+        try {
+            (1+3).shouldBe 3, failureMessage
+            throw new AssertionError("should have failed because 4 is not 3")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
+    @Test
+    public void testShouldNotBeWithFailureMessage() {
+        def failureMessage = "learn logic: false is false"
+        try {
+            false.shouldNotBe false, failureMessage
+            throw new AssertionError("should have failed because false is false")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 }
