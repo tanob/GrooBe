@@ -2,9 +2,9 @@ package com.github.tanob.groobe
 
 class CompositeAssertionsLoader implements AssertionsLoader {
 
-    private AssertionsLoader[] assertions;
+    private Object assertions;
 
-    def CompositeAssertionsLoader(AssertionsLoader[] assertions) {
+    def CompositeAssertionsLoader(Object assertions) {
         this.assertions = assertions
     }
 

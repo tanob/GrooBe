@@ -1,22 +1,30 @@
 package com.github.tanob.groobe.assertions
 
 import com.github.tanob.groobe.AssertionsLoader
-import static com.github.tanob.groobe.assertions.AssertionsSupport.assertTrue
+import com.github.tanob.groobe.CompositeAssertionsLoader
 
+@Singleton
 class NumberAssertions implements AssertionsLoader {
 
-    private def _shouldBe = {Number expected,
-                             String failMessage = "expecting ${expected}, not ${delegate}" ->
-        assertTrue(failMessage, delegate == expected)
+    static final NUMBER_CLASSES = [
+        Byte, Short, Integer, Float, Long, Double, BigDecimal, BigInteger
+    ]
+
+    private AssertionsLoader delegate
+
+    def NumberAssertions() {
+        def assertions = NUMBER_CLASSES.collect {
+            new ConcreteNumberAssertion(it)
+        }
+        delegate = new CompositeAssertionsLoader(assertions)
     }
 
-    void load() {
-        Number.metaClass.shouldBe = _shouldBe;
-        Number.metaClass.shouldBeEqualsTo = _shouldBe
+    def void load() {
+        delegate.load()
     }
 
-    void unload() {
-        Number.metaClass = null
+    def void unload() {
+        delegate.unload()
     }
 
 }
