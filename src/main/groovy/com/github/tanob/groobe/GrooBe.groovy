@@ -1,6 +1,6 @@
 package com.github.tanob.groobe
 
-import com.github.tanob.groobe.hamcrest.*
+import com.github.tanob.groobe.assertions.SimpleAssertions
 
 /**
  */
@@ -8,7 +8,7 @@ abstract class GrooBe {
 
     private static AssertionsLoader loaderImpl
 
-    public static void load(AssertionsLoader loader = AssertionsLoaderFactory.SIMPLE) {
+    public static void load(AssertionsLoader loader = SimpleAssertions.instance) {
         unload()
         loaderImpl = loader
         loaderImpl?.load()
