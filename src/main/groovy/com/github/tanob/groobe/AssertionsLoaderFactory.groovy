@@ -1,8 +1,8 @@
 package com.github.tanob.groobe
 
 import com.github.tanob.groobe.assertions.BooleanAssertions
+import com.github.tanob.groobe.assertions.CharSequenceAssertions
 import com.github.tanob.groobe.assertions.NumberAssertions
-import com.github.tanob.groobe.assertions.StringAssertions
 import com.github.tanob.groobe.hamcrest.*
 
 abstract class AssertionsLoaderFactory {
@@ -10,7 +10,7 @@ abstract class AssertionsLoaderFactory {
     static final AssertionsLoader SIMPLE = new CompositeAssertionsLoader(
         new BooleanAssertions(),
         new NumberAssertions(),
-        new StringAssertions())
+        new CharSequenceAssertions())
 
     static final AssertionsLoader HAMCREST = new CompositeAssertionsLoader(
         new CollectionAssertions(),
@@ -18,7 +18,7 @@ abstract class AssertionsLoaderFactory {
         new EqualityAssertions(),
         new InstanceAssertions(),
         new MapAssertions(),
-        new StringAssertions()
+        new com.github.tanob.groobe.assertions.StringAssertions()
     )
 
     static AssertionsLoader composite(AssertionsLoader[] loaders) {

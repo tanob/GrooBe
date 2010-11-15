@@ -1,91 +1,123 @@
 package com.github.tanob.groobe
 
-import org.junit.Test
+import org.codehaus.groovy.runtime.GStringImpl
 
 abstract class StringAssertionsTest extends AssertionsLoaderTest {
 
-    @Test
-    final void testEmptyStrings() {
-        "".shouldBeEmpty
-        "".shouldHaveLength 0
+    static final String EMPTY_STRING = ""
+    static final String[] EMPTY_STRINGS = [EMPTY_STRING, "$EMPTY_STRING"]
+
+    static final String WHITESPACE_LENGTH_4_STRING = "\r\n\t "
+    static final String[] WHITESPACE_LENGTH_4_STRINGS = [WHITESPACE_LENGTH_4_STRING, "$WHITESPACE_LENGTH_4_STRING"]
+
+    static final String TEXT_LENGTH_3_STRING = " A\n"
+    static final String[] TEXT_LENGTH_3_STRINGS = [TEXT_LENGTH_3_STRING, "$TEXT_LENGTH_3_STRING"]
+
+    void testOtherAssertionsShouldRemainAvailableAfterUnload() {
+        [String, GStringImpl].each {
+            it.metaClass.someMethod = {
+                true
+            }
+        }
+
+        assertionsLoader.unload()
+
+        assertTrue "".someMethod()
+        assertTrue "${this.class}".someMethod()
     }
 
-    @Test
-    final void testFailedEmptyStrings() {
-        Closure assertionCallback = {AssertionError e, String customMessage ->
-            verifyFailedShouldBeEmpty e, customMessage, "A"
-        }
+    void testAssertionsMissingAfterUnload() {
+        assertionsLoader.unload()
 
-        shouldFail null, assertionCallback, {
-            "A".shouldBeEmpty
-        }
+        EMPTY_STRINGS.each {value ->
+            shouldFail MissingPropertyException, {
+                value.shouldBeBlank
+            }
 
-        shouldFail "this should be empty", assertionCallback, {
-            "A".shouldBeEmpty "this should be empty"
-        }
+            shouldFail MissingPropertyException, {
+                value.shouldNotBeBlank
+            }
 
-        assertionCallback = {AssertionError e, String customMessage ->
-            verifyFailedShouldHaveLength e, customMessage, " ", 0
-        }
-
-        shouldFail null, assertionCallback, {
-            " ".shouldHaveLength 0
-        }
-
-        shouldFail "should have length 0", assertionCallback, {
-            " ".shouldHaveLength 0, "should have length 0"
-        }
-    }
-
-    @Test
-    final void testNonEmptyStrings() {
-        " ".shouldHaveLength
-        "  1 ".shouldHaveLength 4
-        "\r\n\t 1".shouldHaveText
-    }
-
-    @Test
-    final void testFailedNonEmptyStrings() {
-        Closure assertionCallback = {AssertionError e, String customMessage ->
-            verifyFailedShouldHaveLength e, customMessage, "", -1
-        }
-
-        shouldFail null, assertionCallback, {
-            "".shouldHaveLength
-        }
-
-        shouldFail "should have any length", assertionCallback, {
-            "".shouldHaveLength "should have any length"
-        }
-
-        assertionCallback = {AssertionError e, String customMessage ->
-            verifyFailedShouldHaveLength e, customMessage, "  ", 1
-        }
-
-        shouldFail null, assertionCallback, {
-            "  ".shouldHaveLength 1
-        }
-
-        shouldFail "should have length 1", assertionCallback, {
-            "  ".shouldHaveLength 1, "should have length 1"
-        }
-
-        assertionCallback = {AssertionError e, String customMessage ->
-            verifyFailedShouldHaveText e, customMessage, "\r\n\t "
-        }
-
-        shouldFail null, assertionCallback, {
-            "\r\n\t ".shouldHaveText
-        }
-
-        shouldFail "only whitespaces", assertionCallback, {
-            "\r\n\t ".shouldHaveText "only whitespaces"
+            shouldFail MissingPropertyException, {
+                value.shouldHaveText
+            }
         }
     }
 
-    abstract void verifyFailedShouldBeEmpty(AssertionError error, String customMessage, String result)
+    void testShouldBeBlank() {
+        EMPTY_STRINGS.each {
+            it.shouldBeBlank
+        }
 
-    abstract void verifyFailedShouldHaveLength(AssertionError error, String customMessage, String result, int expectedLength)
+    }
+
+    void testFailedShouldBeBlank() {
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldBeBlank error, customMessage, TEXT_LENGTH_3_STRING
+        }
+
+        TEXT_LENGTH_3_STRINGS.each { value ->
+            shouldFail null, assertionCallback, {
+                value.shouldBeBlank
+            }
+
+            shouldFail "this should be blank", assertionCallback, {
+                value.shouldBeBlank "this should be blank"
+            }
+        }
+    }
+
+    void testShouldNotBeBlank() {
+        WHITESPACE_LENGTH_4_STRINGS.each {
+            it.shouldNotBeBlank
+        }
+
+        TEXT_LENGTH_3_STRINGS.each {
+            it.shouldNotBeBlank
+        }
+    }
+
+    void testFailedShouldNotBeBlank() {
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldNotBeBlank error, customMessage, EMPTY_STRING
+        }
+
+        EMPTY_STRINGS.each {value ->
+            shouldFail null, assertionCallback, {
+                value.shouldNotBeBlank
+            }
+
+            shouldFail "should not be blank message", assertionCallback, {
+                value.shouldNotBeBlank "should not be blank message"
+            }
+        }
+    }
+
+    void testShouldHaveText() {
+        TEXT_LENGTH_3_STRINGS.each {
+            it.shouldHaveText
+        }
+    }
+
+    void testFailedShouldHaveText() {
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldHaveText error, customMessage, WHITESPACE_LENGTH_4_STRING
+        }
+
+        WHITESPACE_LENGTH_4_STRINGS.each { value ->
+            shouldFail null, assertionCallback, {
+                value.shouldHaveText
+            }
+
+            shouldFail "should have text message", assertionCallback, {
+                value.shouldHaveText "should have text message"
+            }
+        }
+    }
+
+    abstract void verifyFailedShouldBeBlank(AssertionError error, String customMessage, String result)
+
+    abstract void verifyFailedShouldNotBeBlank(AssertionError error, String customMessage, String result)
 
     abstract void verifyFailedShouldHaveText(AssertionError error, String customMessage, String result)
 

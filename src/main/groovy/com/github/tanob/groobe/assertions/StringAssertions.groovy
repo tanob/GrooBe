@@ -1,59 +1,27 @@
 package com.github.tanob.groobe.assertions
 
-import com.github.tanob.groobe.AssertionsLoader
+import com.github.tanob.groobe.BaseAssertionsLoader
 import static com.github.tanob.groobe.assertions.AssertionsSupport.assertTrue
 
-class StringAssertions implements AssertionsLoader {
+class StringAssertions extends BaseAssertionsLoader {
 
-    private def _shouldBeEmpty = {String result, String failMessage = "EMPTY String expected, not '${result}'" ->
-        assertTrue failMessage, "" == result
+    def StringAssertions(Class charSequenceSubType) {
+        super(charSequenceSubType)
     }
 
-    private def _shouldHaveAnyLength = {String result, String failMessage = "NOT expecting an empty String" ->
-        assertTrue failMessage, result.length() > 0
+    def shouldBeBlank(CharSequence delegate, Object[] args) {
+        String failMessage = args.length > 0 ? args[0] : "BLANK String expected, not '$delegate'"
+        assertTrue failMessage, delegate.length() == 0
     }
 
-    private def _shouldHaveLength = {String result, int expectedLength, String failMessage = "length=${expectedLength} expected, not ${result.length()}" ->
-        assertTrue failMessage, result.length() == expectedLength
+    def shouldNotBeBlank(CharSequence delegate, Object[] args) {
+        String failMessage = args.length > 0 ? args[0] : "NOT expecting a blank String"
+        assertTrue failMessage, delegate.length() > 0
     }
 
-    private def _shouldHaveText = {String result, String failMessage = "String with text content expected" ->
-        assertTrue failMessage, result.trim().length() > 0
-    }
-
-    void load() {
-        CharSequence.metaClass.getShouldBeEmpty = {
-            _shouldBeEmpty delegate
-        }
-
-        CharSequence.metaClass.shouldBeEmpty = {String description ->
-            _shouldBeEmpty delegate, description
-        }
-
-        CharSequence.metaClass.getShouldHaveLength = {
-            _shouldHaveAnyLength delegate
-        }
-
-        CharSequence.metaClass.shouldHaveLength = {String description ->
-            _shouldHaveAnyLength delegate, description
-        }
-
-        CharSequence.metaClass.shouldHaveLength = {int length,
-                                                   String description = "length=${length} expected, not ${delegate.length()}" ->
-            _shouldHaveLength delegate, length, description
-        }
-
-        CharSequence.metaClass.getShouldHaveText = {
-            _shouldHaveText delegate
-        }
-
-        CharSequence.metaClass.shouldHaveText = {String failMessage ->
-            _shouldHaveText delegate, failMessage
-        }
-    }
-
-    def void unload() {
-        CharSequence.metaClass = null
+    def shouldHaveText(CharSequence delegate, Object[] args) {
+        String failMessage = args.length > 0 ? args[0] : "String with visible text content expected"
+        assertTrue failMessage, delegate.trim().length() > 0
     }
 
 }

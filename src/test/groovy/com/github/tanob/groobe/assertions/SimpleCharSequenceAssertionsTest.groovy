@@ -9,21 +9,19 @@ class SimpleCharSequenceAssertionsTest extends StringAssertionsTest {
         CharSequenceAssertions.getInstance()
     }
 
-    void verifyFailedShouldBeEmpty(AssertionError error, String customMessage, String result) {
-        String expectedMessage = customMessage ?: "EMPTY String expected, not '${result}'"
+    void verifyFailedShouldBeBlank(AssertionError error, String customMessage, String result) {
+        String expectedMessage = customMessage ?: "BLANK String expected, not '${result}'"
         assertEquals expectedMessage, error.message
     }
 
-    void verifyFailedShouldHaveLength(AssertionError error, String customMessage, String result, int expectedLength) {
-        String expectedMessage = customMessage ?:
-            expectedLength == -1 ? "NOT expecting an empty String" : "length=${expectedLength} expected, not ${result.length()}"
-        
+    void verifyFailedShouldNotBeBlank(AssertionError error, String customMessage, String result) {
+        String expectedMessage = customMessage ?: "NOT expecting a blank String"
         assertEquals expectedMessage, error.message
     }
 
     void verifyFailedShouldHaveText(AssertionError error, String customMessage, String result) {
-        String expectedMessage = customMessage ?: "String with text content expected"
+        String expectedMessage = customMessage ?: "String with visible text content expected"
         assertEquals expectedMessage, error.message
     }
-    
+
 }
