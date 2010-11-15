@@ -129,7 +129,7 @@
                         <exclude>**/hamcrest/*.java</exclude>
                     </excludes>
                     <includes>
-                        <include>**/assertions/*AssertionsTest.java</include>
+                        <include>**/assertions/*Test.java</include>
                     </includes>
                 </configuration>
             </plugin>

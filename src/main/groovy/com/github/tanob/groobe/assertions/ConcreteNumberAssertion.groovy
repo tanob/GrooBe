@@ -1,7 +1,7 @@
 package com.github.tanob.groobe.assertions
 
 import com.github.tanob.groobe.BaseAssertionsLoader
-import static com.github.tanob.groobe.assertions.AssertionsSupport.assertTrue
+import static com.github.tanob.groobe.assertions.Assert.assertTrue
 
 class ConcreteNumberAssertion extends BaseAssertionsLoader {
 
