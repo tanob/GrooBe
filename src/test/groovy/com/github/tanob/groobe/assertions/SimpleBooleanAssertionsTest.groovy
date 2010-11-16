@@ -13,10 +13,6 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
         super.testAssertionsMissingAfterUnload()
 
         (TRUE_VALUES + FALSE_VALUES).each { value ->
-            shouldFail MissingMethodException, {
-                value.shouldBe true
-            }
-
             shouldFail MissingPropertyException, {
                 value.shouldBeTrue
             }
@@ -36,80 +32,60 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
     }
 
     void testShouldBeTrue() {
-        super.testShouldBeTrue()
-
         TRUE_VALUES.each {
-            it.shouldBe true
             it.shouldBeTrue
         }
     }
 
     void testShouldBeFalse() {
-        super.testShouldBeFalse()
-
         FALSE_VALUES.each {
-            it.shouldBe false
             it.shouldBeFalse
         }
     }
 
     void testFailedShouldBeTrue() {
-        super.testFailedShouldBeTrue()
-        Closure c = this.&verifyFailedShouldBeTrue
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldBe error, customMessage, true
+
+        }
 
         FALSE_VALUES.each { value ->
-            shouldFail null, c, {
-                value.shouldBe true
-            }
-
-            shouldFail null, c, {
+            shouldFail null, assertionCallback, {
                 value.shouldBeTrue
             }
 
-            shouldFail "shouldBe true custom fail message", c, {
-                value.shouldBe true, "shouldBe true custom fail message"
-            }
-
-            shouldFail "shouldBeTrue custom fail message", c, {
-                value.shouldBeTrue "shouldBeTrue custom fail message"
+            shouldFail "shouldBeTrue", assertionCallback, {
+                value.shouldBeTrue "shouldBeTrue"
             }
         }
-
     }
 
     void testFailedShouldBeFalse() {
-        super.testFailedShouldBeFalse()
-        Closure c = this.&verifyFailedShouldBeFalse
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldBe error, customMessage, false
+        }
 
         TRUE_VALUES.each { value ->
-            shouldFail null, c, {
-                value.shouldBe false
-            }
-
-            shouldFail null, c, {
+            shouldFail null, assertionCallback, {
                 value.shouldBeFalse
             }
 
-            shouldFail "shouldBe false custom fail message", c, {
-                value.shouldBe false, "shouldBe false custom fail message"
-            }
-
-            shouldFail "shouldBeFalse custom fail message", c, {
+            shouldFail "shouldBeFalse custom fail message", assertionCallback, {
                 value.shouldBeFalse "shouldBeFalse custom fail message"
             }
         }
     }
 
     @Override
-    void verifyFailedShouldBeTrue(Throwable e, String customMessage) {
-        String expectedMessage = customMessage ?: "NOT true as expected"
-        assertEquals expectedMessage, e.message
+    void verifyFailedShouldBe(Throwable error, String customMessage, boolean expected) {
+        String expectedMessage = customMessage ?: "NOT $expected as expected"
+        assertEquals expectedMessage, error.message
     }
 
     @Override
-    void verifyFailedShouldBeFalse(Throwable e, String customMessage) {
-        String expectedMessage = customMessage ?: "NOT false as expected"
-        assertEquals expectedMessage, e.message
+    void verifyFailedShouldNotBe(Throwable error, String customMessage, boolean unexpected) {
+        String expectedMessage = customMessage ?: "NOT expecting $unexpected"
+        assertEquals expectedMessage, error.message
     }
 
 }

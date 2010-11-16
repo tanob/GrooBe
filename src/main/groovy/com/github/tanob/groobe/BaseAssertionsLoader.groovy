@@ -66,4 +66,17 @@ abstract class BaseAssertionsLoader extends DelegatingMetaClass implements Asser
         "expecting $expected, not $actual"
     }
 
+    def shouldNotBe(Object delegate, Object[] args) {
+        String failMessage = args.length > 1 ? args[1] : getShouldNotBeDefaultMessage(args[0], delegate)
+        assertTrue failMessage, args[0] != delegate
+    }
+
+    def shouldNotBeEqualsTo(Object delegate, Object[] args) {
+        shouldNotBe delegate, args
+    }
+
+    String getShouldNotBeDefaultMessage(Object expected, Object actual) {
+        "NOT expecting $expected"
+    }
+
 }

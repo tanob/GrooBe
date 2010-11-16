@@ -19,72 +19,140 @@ abstract class BooleanAssertionsTest extends AssertionsLoaderTest {
                 value.shouldBe true
             }
 
-            shouldFail MissingPropertyException, {
-                value.shouldBeFalse
+            shouldFail MissingMethodException, {
+                value.shouldBeEqualsTo true
+            }
+
+            shouldFail MissingMethodException, {
+                value.shouldNotBe false
+            }
+
+            shouldFail MissingMethodException, {
+                value.shouldNotBeEqualsTo false
             }
         }
     }
 
-    void testShouldBeTrue() {
+    void testShouldBeTrue_shouldNotBeFalse() {
         TRUE_VALUES.each {
             it.shouldBe true
             it.shouldBeEqualsTo true
+            it.shouldNotBe false
+            it.shouldNotBeEqualsTo false
         }
     }
 
-    void testShouldBeFalse() {
+    void testShouldBeFalse_shouldNotBeTrue() {
         FALSE_VALUES.each {
             it.shouldBe false
             it.shouldBeEqualsTo false
+            it.shouldNotBe true
+            it.shouldNotBeEqualsTo true
         }
     }
 
     void testFailedShouldBeTrue() {
-        Closure c = this.&verifyFailedShouldBeTrue
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldBe error, customMessage, true
+        }
 
         FALSE_VALUES.each { value ->
-            shouldFail null, c, {
+            shouldFail null, assertionCallback, {
                 value.shouldBe true
             }
 
-            shouldFail null, c, {
+            shouldFail null, assertionCallback, {
                 value.shouldBeEqualsTo true
             }
 
-            shouldFail "shouldBe true custom fail message", c, {
-                value.shouldBe true, "shouldBe true custom fail message"
+            shouldFail "shouldBe", assertionCallback, {
+                value.shouldBe true, "shouldBe"
             }
 
-            shouldFail "shouldBeEqualsTo true custom fail message", c, {
-                value.shouldBeEqualsTo true, "shouldBeEqualsTo true custom fail message"
+            shouldFail "shouldBeEqualsTo", assertionCallback, {
+                value.shouldBeEqualsTo true, "shouldBeEqualsTo"
+            }
+        }
+    }
+
+    void testFailedShouldNotBeTrue() {
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldNotBe error, customMessage, true
+        }
+
+        TRUE_VALUES.each { value ->
+            shouldFail null, assertionCallback, {
+                value.shouldNotBe true
+            }
+
+            shouldFail null, assertionCallback, {
+                value.shouldNotBeEqualsTo true
+            }
+
+            shouldFail "shouldNotBe", assertionCallback, {
+                value.shouldNotBe true, "shouldNotBe"
+            }
+
+            shouldFail "shouldNotBeEqualsTo", assertionCallback, {
+                value.shouldNotBeEqualsTo true, "shouldNotBeEqualsTo"
             }
         }
     }
 
     void testFailedShouldBeFalse() {
-        Closure c = this.&verifyFailedShouldBeFalse
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldBe error, customMessage, false
+        }
 
         TRUE_VALUES.each { value ->
-            shouldFail null, c, {
+            shouldFail null, assertionCallback, {
                 value.shouldBe false
             }
 
-            shouldFail null, c, {
+            shouldFail null, assertionCallback, {
                 value.shouldBeEqualsTo false
             }
 
-            shouldFail "shouldBe false custom fail message", c, {
-                value.shouldBe false, "shouldBe false custom fail message"
+            shouldFail "shouldBe", assertionCallback, {
+                value.shouldBe false, "shouldBe"
             }
 
-            shouldFail "shouldBeEqualsTo false custom fail message", c, {
-                value.shouldBeEqualsTo false, "shouldBeEqualsTo false custom fail message"
+            shouldFail "shouldBeEqualsTo", assertionCallback, {
+                value.shouldBeEqualsTo false, "shouldBeEqualsTo"
             }
         }
     }
 
-    abstract void verifyFailedShouldBeTrue(Throwable e, String customMessage)
+    void testFailedShouldNotBeFalse() {
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldNotBe error, customMessage, false
+        }
 
-    abstract void verifyFailedShouldBeFalse(Throwable e, String customMessage)
+        FALSE_VALUES.each { value ->
+            shouldFail null, assertionCallback, {
+                value.shouldNotBe false
+            }
+
+            shouldFail null, assertionCallback, {
+                value.shouldNotBeEqualsTo false
+            }
+
+            shouldFail "shouldNotBe", assertionCallback, {
+                value.shouldNotBe false, "shouldNotBe"
+            }
+
+            shouldFail "shouldNotBeEqualsTo", assertionCallback, {
+                value.shouldNotBeEqualsTo false, "shouldNotBeEqualsTo"
+            }
+        }
+    }
+
+    void verifyFailedShouldBe(Throwable error, String customMessage, boolean expected) {
+        fail "not yet implemented"
+    }
+
+    void verifyFailedShouldNotBe(Throwable error, String customMessage, boolean unexpected) {
+        fail "not yet implemented"
+    }
 
 }
