@@ -104,4 +104,36 @@ class MapAssertionsTest {
             e.message.shouldStartWith failureMessage
         }
     }
+
+    @Test
+    public void testShouldBeEmpty() {
+        [:].shouldBeEmpty()
+    }
+
+    @Test
+    public void testShouldBeEmptyWithFailureMessage() {
+        def failureMessage = "the map is not empty"
+        try {
+            [x: 2].shouldBeEmpty failureMessage
+            throw new AssertionError("should have failed because the map is not empty")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
+    @Test
+    public void testShouldNotBeEmpty() {
+        [x: 3].shouldNotBeEmpty()
+    }
+
+    @Test
+    public void testShouldNotBeEmptyWithFailureMessage() {
+        def failureMessage = "the map is empty"
+        try {
+            [:].shouldNotBeEmpty failureMessage
+            throw new AssertionError("should have failed because the map is empty")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
 }
