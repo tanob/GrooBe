@@ -24,4 +24,9 @@ class SimpleCharSequenceAssertionsTest extends StringAssertionsTest {
         assertEquals expectedMessage, error.message
     }
 
+    void verifyFailedShouldBe(AssertionError error, String customMessage, CharSequence expected, CharSequence result) {
+        String expectedMessage = customMessage ?: "Strings are not equal: expecting '$expected', not '$result'"
+        assertEquals expectedMessage, error.message
+    }
+
 }
