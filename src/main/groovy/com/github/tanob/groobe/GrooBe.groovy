@@ -4,7 +4,7 @@ import com.github.tanob.groobe.assertions.SimpleAssertions
 
 /**
  */
-abstract class GrooBe {
+final class GrooBe {
 
     private static AssertionsLoader loaderImpl
 
@@ -17,6 +17,10 @@ abstract class GrooBe {
     public static void unload() {
         loaderImpl?.unload()
         loaderImpl = null
+    }
+
+    def GrooBe() {
+        throw new UnsupportedOperationException()
     }
 
 }

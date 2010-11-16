@@ -130,6 +130,7 @@
                     </excludes>
                     <includes>
                         <include>**/assertions/*Test.java</include>
+                        <include>**/GrooBeTest.java</include>
                     </includes>
                 </configuration>
             </plugin>
