@@ -10,10 +10,8 @@ class BooleanAssertions extends BaseAssertionsLoader {
         super(Boolean)
     }
 
-    def shouldBe(boolean delegate, Object[] args) {
-        boolean expected = Boolean.valueOf(args[0])
-        Object[] otherArgs = args.length > 1 ? args[1..-1] : []
-        _shouldBeImpl delegate, expected, otherArgs
+    String getShouldBeDefaultMessage(Object expected, Object actual) {
+        "NOT $expected as expected"
     }
 
     def shouldBeTrue(boolean delegate, Object[] args) {

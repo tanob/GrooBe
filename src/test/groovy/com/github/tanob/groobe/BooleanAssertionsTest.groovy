@@ -19,8 +19,8 @@ abstract class BooleanAssertionsTest extends AssertionsLoaderTest {
                 value.shouldBe true
             }
 
-            shouldFail MissingMethodException, {
-                value.shouldBe false, "fail message"
+            shouldFail MissingPropertyException, {
+                value.shouldBeFalse
             }
         }
     }
@@ -28,12 +28,14 @@ abstract class BooleanAssertionsTest extends AssertionsLoaderTest {
     void testShouldBeTrue() {
         TRUE_VALUES.each {
             it.shouldBe true
+            it.shouldBeEqualsTo true
         }
     }
 
     void testShouldBeFalse() {
         FALSE_VALUES.each {
             it.shouldBe false
+            it.shouldBeEqualsTo false
         }
     }
 
@@ -45,8 +47,16 @@ abstract class BooleanAssertionsTest extends AssertionsLoaderTest {
                 value.shouldBe true
             }
 
+            shouldFail null, c, {
+                value.shouldBeEqualsTo true
+            }
+
             shouldFail "shouldBe true custom fail message", c, {
                 value.shouldBe true, "shouldBe true custom fail message"
+            }
+
+            shouldFail "shouldBeEqualsTo true custom fail message", c, {
+                value.shouldBeEqualsTo true, "shouldBeEqualsTo true custom fail message"
             }
         }
     }
@@ -59,8 +69,16 @@ abstract class BooleanAssertionsTest extends AssertionsLoaderTest {
                 value.shouldBe false
             }
 
+            shouldFail null, c, {
+                value.shouldBeEqualsTo false
+            }
+
             shouldFail "shouldBe false custom fail message", c, {
                 value.shouldBe false, "shouldBe false custom fail message"
+            }
+
+            shouldFail "shouldBeEqualsTo false custom fail message", c, {
+                value.shouldBeEqualsTo false, "shouldBeEqualsTo false custom fail message"
             }
         }
     }

@@ -14,7 +14,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
 
         (TRUE_VALUES + FALSE_VALUES).each { value ->
             shouldFail MissingMethodException, {
-                value.shouldBe "true"
+                value.shouldBe true
             }
 
             shouldFail MissingPropertyException, {
@@ -39,7 +39,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
         super.testShouldBeTrue()
 
         TRUE_VALUES.each {
-            it.shouldBe "true"
+            it.shouldBe true
             it.shouldBeTrue
         }
     }
@@ -48,7 +48,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
         super.testShouldBeFalse()
 
         FALSE_VALUES.each {
-            it.shouldBe "false"
+            it.shouldBe false
             it.shouldBeFalse
         }
     }
@@ -59,7 +59,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
 
         FALSE_VALUES.each { value ->
             shouldFail null, c, {
-                value.shouldBe "true"
+                value.shouldBe true
             }
 
             shouldFail null, c, {
@@ -67,7 +67,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
             }
 
             shouldFail "shouldBe true custom fail message", c, {
-                value.shouldBe "true", "shouldBe true custom fail message"
+                value.shouldBe true, "shouldBe true custom fail message"
             }
 
             shouldFail "shouldBeTrue custom fail message", c, {
@@ -83,7 +83,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
 
         TRUE_VALUES.each { value ->
             shouldFail null, c, {
-                value.shouldBe "false"
+                value.shouldBe false
             }
 
             shouldFail null, c, {
@@ -91,7 +91,7 @@ class SimpleBooleanAssertionsTest extends BooleanAssertionsTest {
             }
 
             shouldFail "shouldBe false custom fail message", c, {
-                value.shouldBe "false", "shouldBe false custom fail message"
+                value.shouldBe false, "shouldBe false custom fail message"
             }
 
             shouldFail "shouldBeFalse custom fail message", c, {

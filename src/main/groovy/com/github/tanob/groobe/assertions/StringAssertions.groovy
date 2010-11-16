@@ -24,13 +24,8 @@ class StringAssertions extends BaseAssertionsLoader {
         assertTrue failMessage, delegate.trim().length() > 0
     }
 
-    def shouldBe(CharSequence delegate, Object[] args) {
-        String failMessage = args.length > 1 ? args[1] : "Strings doesn't match: expecting '${args[0]}', not '$delegate'"
-        assertTrue failMessage, args[0] == delegate
-    }
-
-    def shouldBeEqualsTo(CharSequence delegate, Object[] args) {
-        shouldBe delegate, args
+    String getShouldBeDefaultMessage(Object expected, Object actual) {
+        "Strings doesn't match: expecting '$expected', not '$actual'"
     }
 
     def shouldBeIgnoringCase(CharSequence delegate, Object[] args) {

@@ -1,5 +1,7 @@
 package com.github.tanob.groobe
 
+import static com.github.tanob.groobe.assertions.Assert.assertTrue
+
 abstract class BaseAssertionsLoader extends DelegatingMetaClass implements AssertionsLoader {
 
     private def loaded
@@ -47,6 +49,21 @@ abstract class BaseAssertionsLoader extends DelegatingMetaClass implements Asser
                 throw e
             }
         }
+    }
+
+    // object assertions
+
+    def shouldBe(Object delegate, Object[] args) {
+        String failMessage = args.length > 1 ? args[1] : getShouldBeDefaultMessage(args[0], delegate)
+        assertTrue failMessage, args[0] == delegate
+    }
+
+    def shouldBeEqualsTo(Object delegate, Object[] args) {
+        shouldBe delegate, args
+    }
+
+    String getShouldBeDefaultMessage(Object expected, Object actual) {
+        "expecting $expected, not $actual"
     }
 
 }
