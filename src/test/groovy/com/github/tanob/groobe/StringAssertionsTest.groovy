@@ -57,6 +57,14 @@ abstract class StringAssertionsTest extends AssertionsLoaderTest {
             shouldFail MissingMethodException, {
                 value.shouldBeIgnoringCase EMPTY_STRING
             }
+
+            shouldFail MissingMethodException, {
+                value.shouldNotBe TEXT_STRING
+            }
+
+            shouldFail MissingMethodException, {
+                value.shouldNotBeEqualsTo TEXT_STRING
+            }
         }
     }
 
@@ -195,12 +203,45 @@ abstract class StringAssertionsTest extends AssertionsLoaderTest {
         }
     }
 
-    abstract void verifyFailedShouldBeBlank(AssertionError error, String customMessage, String result)
+    void testShouldNotBe_shouldNotBeEqualsTo() {
+        EMPTY_STRINGS.each {
+            it.shouldNotBe TEXT_STRING
+            it.shouldNotBeEqualsTo TEXT_STRING
+        }
+    }
 
-    abstract void verifyFailedShouldNotBeBlank(AssertionError error, String customMessage, String result)
+    void testFailedShouldNotBe_shouldNotBeEqualsTo() {
+        def assertionCallback = {error, customMessage ->
+            verifyFailedShouldNotBe error, customMessage, EMPTY_STRING
+        }
 
-    abstract void verifyFailedShouldHaveText(AssertionError error, String customMessage, String result)
+        EMPTY_STRINGS.each { value ->
+            shouldFail null, assertionCallback, {
+                value.shouldNotBe EMPTY_STRING
+            }
+
+            shouldFail "should not be", assertionCallback, {
+                 value.shouldNotBe EMPTY_STRING, "should not be"
+            }
+
+            shouldFail null, assertionCallback, {
+                value.shouldNotBeEqualsTo EMPTY_STRING
+            }
+
+            shouldFail "should not be equals to", assertionCallback, {
+                value.shouldNotBeEqualsTo EMPTY_STRING, "should not be equals to"
+            }
+        }
+    }
+
+    abstract void verifyFailedShouldBeBlank(AssertionError error, String customMessage, CharSequence result)
+
+    abstract void verifyFailedShouldNotBeBlank(AssertionError error, String customMessage, CharSequence result)
+
+    abstract void verifyFailedShouldHaveText(AssertionError error, String customMessage, CharSequence result)
 
     abstract void verifyFailedShouldBe(AssertionError error, String customMessage, CharSequence expected, CharSequence result)
+
+    abstract void verifyFailedShouldNotBe(AssertionError error, String customMessage, CharSequence result)
 
 }

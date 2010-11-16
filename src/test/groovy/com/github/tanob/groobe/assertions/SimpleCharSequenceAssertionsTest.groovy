@@ -9,23 +9,28 @@ class SimpleCharSequenceAssertionsTest extends StringAssertionsTest {
         CharSequenceAssertions.getInstance()
     }
 
-    void verifyFailedShouldBeBlank(AssertionError error, String customMessage, String result) {
+    void verifyFailedShouldBeBlank(AssertionError error, String customMessage, CharSequence result) {
         String expectedMessage = customMessage ?: "BLANK String expected, not '${result}'"
         assertEquals expectedMessage, error.message
     }
 
-    void verifyFailedShouldNotBeBlank(AssertionError error, String customMessage, String result) {
+    void verifyFailedShouldNotBeBlank(AssertionError error, String customMessage, CharSequence result) {
         String expectedMessage = customMessage ?: "NOT expecting a blank String"
         assertEquals expectedMessage, error.message
     }
 
-    void verifyFailedShouldHaveText(AssertionError error, String customMessage, String result) {
+    void verifyFailedShouldHaveText(AssertionError error, String customMessage, CharSequence result) {
         String expectedMessage = customMessage ?: "String with visible text content expected"
         assertEquals expectedMessage, error.message
     }
 
     void verifyFailedShouldBe(AssertionError error, String customMessage, CharSequence expected, CharSequence result) {
-        String expectedMessage = customMessage ?: "Strings are not equal: expecting '$expected', not '$result'"
+        String expectedMessage = customMessage ?: "Strings doesn't match: expecting '$expected', not '$result'"
+        assertEquals expectedMessage, error.message
+    }
+
+    void verifyFailedShouldNotBe(AssertionError error, String customMessage, CharSequence result) {
+        String expectedMessage = customMessage ?: "Strings not supposed to match, but they do"
         assertEquals expectedMessage, error.message
     }
 

@@ -25,7 +25,7 @@ class StringAssertions extends BaseAssertionsLoader {
     }
 
     def shouldBe(CharSequence delegate, Object[] args) {
-        String failMessage = args.length > 1 ? args[1] : "Strings are not equal: expecting '${args[0]}', not '$delegate'"
+        String failMessage = args.length > 1 ? args[1] : "Strings doesn't match: expecting '${args[0]}', not '$delegate'"
         assertTrue failMessage, args[0] == delegate
     }
 
@@ -34,12 +34,21 @@ class StringAssertions extends BaseAssertionsLoader {
     }
 
     def shouldBeIgnoringCase(CharSequence delegate, Object[] args) {
-        String failMessage = args.length > 1 ? args[1] : "Strings are not equal: expecting '${args[0]}', not '$delegate'"
+        String failMessage = args.length > 1 ? args[1] : "Strings doesn't match: expecting '${args[0]}', not '$delegate'"
         assertTrue failMessage, delegate.equalsIgnoreCase(args[0])
     }
 
     def shouldBeEqualsToIgnoringCase(CharSequence delegate, Object[] args) {
         shouldBeIgnoringCase delegate, args
+    }
+
+    def shouldNotBe(CharSequence delegate, Object[] args) {
+        String failMessage = args.length > 1 ? args[1] : "Strings not supposed to match, but they do"
+        assertTrue failMessage, delegate != args[0]
+    }
+
+    def shouldNotBeEqualsTo(CharSequence delegate, Object[] args) {
+        shouldNotBe delegate, args
     }
 
 }
