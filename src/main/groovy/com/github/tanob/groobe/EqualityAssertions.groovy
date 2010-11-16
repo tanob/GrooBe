@@ -2,14 +2,14 @@ package com.github.tanob.groobe
 
 import static org.hamcrest.CoreMatchers.is
 import static org.hamcrest.CoreMatchers.not
-import static com.github.tanob.groobe.AssertionSupport.assertTransformedDelegate
+import static com.github.tanob.groobe.AssertionSupport.assertTransformedDelegateAndOneParam
 
 /**
  */
 public class EqualityAssertions {
     private static def fixingNull = { it.equals(null) ? null : it }
-    private static def shouldBeEqualTo = assertTransformedDelegate (fixingNull, { is(it) })
-    private static def shouldNotBeEqualTo = assertTransformedDelegate (fixingNull, { is(not(it)) })
+    private static def shouldBeEqualTo = assertTransformedDelegateAndOneParam (fixingNull, { is(it) })
+    private static def shouldNotBeEqualTo = assertTransformedDelegateAndOneParam (fixingNull, { is(not(it)) })
 
     public static def activate() {
         shouldBeEqual()

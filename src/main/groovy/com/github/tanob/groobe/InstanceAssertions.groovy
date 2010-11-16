@@ -1,13 +1,13 @@
 package com.github.tanob.groobe
 
 import static org.hamcrest.CoreMatchers.*
-import static com.github.tanob.groobe.AssertionSupport.assertDelegate
+import static com.github.tanob.groobe.AssertionSupport.assertDelegateAndOneParam
 
 /**
  */
 class InstanceAssertions {
-    private static def shouldBeInstanceOf = assertDelegate { instanceOf(it) }
-    private static def shouldNotBeInstanceOf = assertDelegate { is(not(instanceOf(it))) }
+    private static def shouldBeInstanceOf = assertDelegateAndOneParam { instanceOf(it) }
+    private static def shouldNotBeInstanceOf = assertDelegateAndOneParam { is(not(instanceOf(it))) }
 
     public static def activate() {
         shouldBeInstanceOf()
