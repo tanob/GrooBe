@@ -144,6 +144,16 @@
             </roles>
             <timezone>-3</timezone>
         </developer>
+        <developer>
+            <id>erdanielli</id>
+            <name>Eduardo Rebola Danielli</name>
+            <email>erdanielli@gmail.com</email>
+            <url>http://github.com/erdanielli</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>-3</timezone>
+        </developer>
     </developers>
 
     <distributionManagement>
