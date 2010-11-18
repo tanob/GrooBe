@@ -26,6 +26,38 @@ class CollectionAssertionsTest {
     }
 
     @Test
+    public void testListShouldContainASubsetOfItems() {
+        def nums = [1, 2, 3]
+
+        nums.shouldContainSubset ([1, 2])
+        nums.shouldContainSubset ([])
+
+        /*
+           If parentheses are omitted on tbe shouldContainSubset call, the following exception gets thrown:
+           groovy.lang.MissingPropertyException:
+             Exception evaluating property 'shouldContainSubset' for java.util.ArrayList,
+             Reason: groovy.lang.MissingPropertyException:
+               No such property: shouldContainSubset for class: java.lang.Integer
+         */
+    }
+
+    @Test
+    public void testListShouldNotContainASubsetOfItems() {
+        def nums = [1, 2, 3]
+
+        nums.shouldNotContainSubset ([0, 10])
+        nums.shouldNotContainSubset ([1, 4])
+
+        /*
+           If parentheses are omitted on the shouldNotContainSubset call, the following exception gets thrown:
+           groovy.lang.MissingPropertyException:
+             Exception evaluating property 'shouldNotContainSubset' for java.util.ArrayList,
+             Reason: groovy.lang.MissingPropertyException:
+               No such property: shouldNotContainSubset for class: java.lang.Integer
+         */
+    }
+
+    @Test
     public void testShouldContainWithSimpleElement() {
         def list = [1, 2, 3]
         list.shouldContain 1
@@ -68,4 +100,5 @@ class CollectionAssertionsTest {
         def list = [1, 2, 3]
         list.shouldNotBeEmpty()
     }
+
 }
