@@ -26,6 +26,7 @@ GrooBe
   * `shouldHaveKey` and `shouldNotHaveKey`
   * `shouldHaveValue` and `shouldNotHaveValue`
   * `shouldHaveEntry` and `shouldNotHaveEntry`
+  * `shouldBeEmpty` and `shouldNotBeEmpty`
 
 * Collection assertions
   * `shouldContain` and `shouldNotContain`
@@ -39,7 +40,7 @@ Just add `GrooBe` as a dependency on your Maven `pom.xml` file:
     <dependency>
         <groupId>com.github.tanob</groupId>
         <artifactId>groobe</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </dependency>
  
 Example

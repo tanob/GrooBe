@@ -1,21 +1,25 @@
 package com.github.tanob.groobe
 
 import static org.hamcrest.CoreMatchers.not
-import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.collection.IsCollectionContaining.hasItem
 import static org.hamcrest.core.Is.is
 import static org.hamcrest.number.OrderingComparisons.greaterThan
 import static org.hamcrest.collection.IsCollectionContaining.hasItems
+import static com.github.tanob.groobe.AssertionSupport.assertDelegateAndOneParam
+import static com.github.tanob.groobe.AssertionSupport.assertTransformedDelegateAndNoParams
 
 /**
  */
 class CollectionAssertions {
     public static def activate() {
-        Collection.metaClass.shouldContain = { assertThat delegate, hasItem(it) }
-        Collection.metaClass.shouldNotContain = { assertThat delegate, not(hasItem(it)) }
-        Collection.metaClass.shouldContainSubset = { assertThat delegate, hasItems(it.toArray()) }
-        Collection.metaClass.shouldNotContainSubset = { assertThat delegate, not(hasItems(it.toArray())) }
-        Collection.metaClass.shouldBeEmpty = { assertThat delegate.size(), is(0) }
-        Collection.metaClass.shouldNotBeEmpty = { assertThat delegate.size(), greaterThan(0) }
+        Collection.metaClass.shouldContain = assertDelegateAndOneParam { hasItem(it) }
+        Collection.metaClass.shouldNotContain = assertDelegateAndOneParam { not(hasItem(it)) }
+        Collection.metaClass.shouldContainSubset = assertDelegateAndOneParam { hasItems(it.toArray()) }
+        Collection.metaClass.shouldNotContainSubset = assertDelegateAndOneParam { not(hasItems(it.toArray())) }
+
+        def size = { it.size() }
+
+        Collection.metaClass.shouldBeEmpty = assertTransformedDelegateAndNoParams(size, { is(0) })
+        Collection.metaClass.shouldNotBeEmpty = assertTransformedDelegateAndNoParams(size, { greaterThan(0) })
     }
 }

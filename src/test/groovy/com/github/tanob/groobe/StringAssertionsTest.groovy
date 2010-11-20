@@ -15,14 +15,47 @@ class StringAssertionsTest {
         "this is a string".shouldStartWith "this"
     }
 
+    @Test
+    public void testShouldStartWithAssertionWithFailureMessage() {
+        def failureMessage = "string does not start with 'this'"
+        try {
+            "string".shouldStartWith "this", failureMessage
+            throw new AssertionError("should have failed because 'string' does not start with 'this'")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
     @Test(expected = AssertionError)
     public void testAStringShouldNotStartWith() {
         "some string".shouldNotStartWith "some"
     }
 
     @Test
+    public void testShouldNotStartWithAssertionWithFailureMessage() {
+        def failureMessage = "string starts with 'str'"
+        try {
+            "string".shouldNotStartWith "str", failureMessage
+            throw new AssertionError("should have failed because 'string' starts with 'str'")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
+    @Test
     public void testAStringShouldEndWith() {
         "this is a string".shouldEndWith "string"
+    }
+
+    @Test
+    public void testShouldEndWithAssertionWithFailureMessage() {
+        def failureMessage = "'string' does not end with 'something'"
+        try {
+            "string".shouldEndWith "something", failureMessage
+            throw new AssertionError("should have failed because 'string' does not end with 'something'")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 
     @Test(expected = AssertionError)
@@ -31,13 +64,46 @@ class StringAssertionsTest {
     }
 
     @Test
+    public void testShouldNotEndWithAssertionWithFailureMessage() {
+        def failureMessage = "'string' does end with 'ing'"
+        try {
+            "string".shouldNotEndWith "ing", failureMessage
+            throw new AssertionError("should have failed because 'string' does end with 'ing'")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
+    @Test
     public void testStringShouldContain() {
         "a string contains".shouldContain "string"
     }
 
     @Test
+    public void testShouldContainWithFailureMessage() {
+        def failureMessage = "contains does not contain 'string'"
+        try {
+            "contains".shouldContain "string", failureMessage
+            throw new AssertionError("should have failed because 'contains' does not contain 'string'")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
+    @Test
     public void testStringShouldNotContain() {
         "a different string".shouldNotContain "the same string"
+    }
+
+    @Test
+    public void testShouldNotContainWithFailureMessage() {
+        def failureMessage = "'string' contains 'ing'"
+        try {
+            "string".shouldNotContain "ing", failureMessage
+            throw new AssertionError("should have failed because 'string' contains 'ing'")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 
     @Test
@@ -51,8 +117,30 @@ class StringAssertionsTest {
     }
 
     @Test
+    public void testShouldBeEmptyWithFailureMessage() {
+        def failureMessage = "string is not empty"
+        try {
+            "non empty string".shouldBeEmpty failureMessage
+            throw new AssertionError("should have failed because the string is not empty")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
+    }
+
+    @Test
     public void testShouldNotBeEmptyWithNonEmptyString() {
         "non empty string".shouldNotBeEmpty()
+    }
+
+    @Test
+    public void testShouldNotBeEmptyWithFailureMessage() {
+        def failureMessage = "string is empty"
+        try {
+            "".shouldNotBeEmpty failureMessage
+            throw new AssertionError("should have failed because the string is empty")
+        } catch (AssertionError e) {
+            e.message.shouldStartWith failureMessage
+        }
     }
 
     @Test(expected = AssertionError)
