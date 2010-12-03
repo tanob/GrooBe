@@ -241,4 +241,9 @@ class StringAssertionsTest {
     public void testShouldNotBeEmptyWithStringBuilder() {
         new StringBuilder("string").shouldNotBeEmpty()
     }
+
+    @Test
+    public void testShouldNotContainWithLazyFailureMessage() {
+        "a string".shouldNotContain "something", { throw new Error("this won't be evaluated") }
+    }
 }

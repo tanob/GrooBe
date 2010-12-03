@@ -27,12 +27,28 @@ class AssertionSupport {
         }
     }
 
-    public static def assertWithFailureMessage(delegate, matcher, failureMessage) {
-        if (failureMessage) {
+    public static def assertWithFailureMessage(delegate, matcher, failureMessageOrClosure) {
+        if (failureMessageOrClosure) {
+            String failureMessage = resolveFailureMessage(failureMessageOrClosure, matcher, delegate)
             assertThat failureMessage, delegate, matcher
         }
         else {
             assertThat delegate, matcher
         }
+    }
+
+    private static String resolveFailureMessage(failureMessageOrClosure, matcher, delegate) {
+        def failureMessage = ""
+
+        if (failureMessageOrClosure instanceof Closure) {
+            if (!matcher.matches(delegate)) {
+                failureMessage = failureMessageOrClosure()
+            }
+        }
+        else {
+            failureMessage = failureMessageOrClosure
+        }
+
+        return failureMessage
     }
 }
