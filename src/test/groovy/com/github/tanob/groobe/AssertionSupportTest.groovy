@@ -24,4 +24,13 @@ class AssertionSupportTest {
     public void testThatLazyFailureMessageWillOnlyBeEvaluatedIfMatcherDoesNotMatch() {
         assertWithFailureMessage true, equalTo(true), { throw new Error("this should not be thrown") }
     }
+
+    @Test
+    public void testAnotherScenarioWithLazyFailureMessage() {
+        assertWithFailureMessage true, equalTo(true), { "foo" + someExpensiveCall() + "bar"  }
+    }
+
+    def someExpensiveCall() {
+        throw new Error("this should not be thrown")
+    }
 }
