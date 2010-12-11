@@ -30,6 +30,7 @@ GrooBe
 
 * Collection assertions
   * `shouldContain` and `shouldNotContain`
+  * `shouldContainSubset` and `shouldNotContainSubset`
   * `shouldBeEmpty` and `shouldNotBeEmpty`
 
 Usage
