@@ -24,5 +24,8 @@ class StringAssertions {
 
         CharSequence.metaClass.shouldBeEmpty = assertTransformedDelegateAndNoParams(length, { is(0) })
         CharSequence.metaClass.shouldNotBeEmpty = assertTransformedDelegateAndNoParams(length, { greaterThan(0) })
+
+        CharSequence.metaClass.shouldBe = assertTransformedDelegateAndOneParam(string, { is(it.toString()) })
+        CharSequence.metaClass.shouldNotBe = assertTransformedDelegateAndOneParam(string, { is(not(it.toString())) })
     }
 }

@@ -246,4 +246,33 @@ class StringAssertionsTest {
     public void testShouldNotContainWithLazyFailureMessage() {
         "a string".shouldNotContain "something", { throw new Error("this won't be evaluated") }
     }
+
+    @Test
+    public void testShouldBeWithGStrings() {
+        def string1 = "My String"
+        def string1AsGString = "$string1"
+        def string1AsMultiline = """$string1"""
+
+        // http://groovy.codehaus.org/Strings+and+GString
+        string1.shouldBe string1AsGString
+        string1.shouldBe string1AsMultiline
+        string1AsGString.shouldBe string1
+        string1AsGString.shouldBe string1AsMultiline
+        string1AsMultiline.shouldBe string1
+        string1AsMultiline.shouldBe string1AsGString
+    }
+
+    @Test
+    public void testShouldNotBeWithGStrings() {
+        def string1 = "My String"
+        def string1AsGString = "gstring $string1"
+        def string1AsMultiline = """multiline gstring $string1"""
+
+        string1.shouldNotBe string1AsGString
+        string1.shouldNotBe string1AsMultiline
+        string1AsGString.shouldNotBe string1
+        string1AsGString.shouldNotBe string1AsMultiline
+        string1AsMultiline.shouldNotBe string1
+        string1AsMultiline.shouldNotBe string1AsGString
+    }
 }
