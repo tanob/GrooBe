@@ -32,6 +32,9 @@ GrooBe
   * `shouldContain` and `shouldNotContain`
   * `shouldBeEmpty` and `shouldNotBeEmpty`
 
+* Closure assertions
+  * `shouldFailWith`
+
 Usage
 -----
 
