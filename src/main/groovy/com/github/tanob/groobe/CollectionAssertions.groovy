@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.not
 import static org.hamcrest.collection.IsCollectionContaining.hasItem
 import static org.hamcrest.core.Is.is
 import static org.hamcrest.number.OrderingComparisons.greaterThan
+import static org.hamcrest.collection.IsCollectionContaining.hasItems
 import static com.github.tanob.groobe.AssertionSupport.assertDelegateAndOneParam
 import static com.github.tanob.groobe.AssertionSupport.assertTransformedDelegateAndNoParams
 
@@ -13,6 +14,8 @@ class CollectionAssertions {
     public static def activate() {
         Collection.metaClass.shouldContain = assertDelegateAndOneParam { hasItem(it) }
         Collection.metaClass.shouldNotContain = assertDelegateAndOneParam { not(hasItem(it)) }
+        Collection.metaClass.shouldContainSubset = assertDelegateAndOneParam { hasItems(it.toArray()) }
+        Collection.metaClass.shouldNotContainSubset = assertDelegateAndOneParam { not(hasItems(it.toArray())) }
 
         def size = { it.size() }
 
